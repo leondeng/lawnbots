@@ -2,6 +2,8 @@
 
 namespace Fan\Lawnbots\Entity;
 
+use Doctrine\Common\Inflector\Inflector;
+
 abstract class BaseEntity
 {
   /**
@@ -13,19 +15,20 @@ abstract class BaseEntity
    */
   private $id;
 
-  public function __get($property){
-    return $this->{$property};
-  }
-
-  public function __set($property, $value) {
-    $this->{$property} = $value;
-
-    return $this;
-  }
-
   public function __call($method, $arguments){
-    if (in_array($verb = substr($method, 0, 3), array('set', 'get'))) {
-      print_r($arguments); die();
+   $failed = false;
+    try {
+      if (in_array($verb = substr($method, 0, 3), array('set', 'get'))) {
+        $prop = Inflector::camelize(substr($method, 3));
+        
+        $refl = new \ReflectionObject($this);
+        if ($refl->hasProperty($prop)) {
+          array_unshift($arguments, $prop);
+          return call_user_func_array(array($this, $verb), $arguments);
+        }
+      }
+    } catch(\Exception $e) {
+      throw $e;
     }
   }
 
