@@ -1,0 +1,9 @@
+.bash_history
+.buildpath
+.project
+.settings
+vendor
+log
+*.swp
+*~
+*.lock
