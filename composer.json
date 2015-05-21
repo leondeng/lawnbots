@@ -1,0 +1,53 @@
+{
+  "name": "lawnbots",
+  "version": "1.0.0",
+  "keywords": [
+    "lawnbots"
+  ],
+
+  "homepage": "https://github.com/leondeng/lawnbots",
+  "license": "MIT",
+  "authors": 
+  [
+    {
+      "name": "Fan Deng",
+      "email": "leodneng@gmail.com"
+    }
+  ],
+
+  "require": {
+    "php": ">=5.4",
+    "doctrine/orm": "~2.5",
+    "doctrine/migrations" : "v1.0.0-alpha3",
+    "symfony/yaml": "~2.6",
+    "symfony/finder": "~2.6",
+    "symfony/config": "~2.6",
+    "doctrine/data-fixtures": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.6.*"
+  },
+
+  "autoload": {
+    "psr-0": {
+      "Fan\\Lawnbots\\": "lib/"
+    }
+  },
+  "autoload-dev": {
+    "psr-0": {
+      "Fan\\Lawnbots\\Tests": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "scripts": {
+    "test": "php vendor/bin/phpunit",
+    "test:all": "php vendor/bin/phpunit",
+    "test:entity": "php vendor/bin/phpunit tests/Fan/Lawnbots/Tests/unit/EntitiesTest",
+    "test:repository": "php vendor/bin/phpunit tests/Fan/Lawnbots/Tests/unit/RepositoriesTest",
+    "test:build-db": "php bin/doctrine orm:schema-tool:drop --force; php bin/doctrine orm:schema-tool:create"
+  }
+}

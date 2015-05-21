@@ -1,0 +1,17 @@
+doctrine:
+  driver: pdo_mysql
+  unix_socket: /var/run/mysqld/mysqld.sock
+  dbname: lawnbots
+  user: root
+  password: ~
+
+test:
+  driver: pdo_mysql
+  unix_socket: /var/run/mysqld/mysqld.sock
+  dbname: lawnbots_test
+  user: root
+  password: ~
+
+sqlite:
+  driver: pdo_sqlite
+  memory: true
