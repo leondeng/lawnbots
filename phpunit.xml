@@ -1,8 +1,7 @@
 <phpunit bootstrap="tests/bootstrap.php">
   <testsuites>
     <testsuite name="lawnbots_unit">
-        <file>tests/Fan/Lawnbots/Tests/unit/BotTest.php</file>
-        <file>tests/Fan/Lawnbots/Tests/unit/LawnTest.php</file>
+        <directory suffix="Test.php">tests/Fan/Lawnbots/Tests/unit</directory>
     </testsuite>
   </testsuites>
 

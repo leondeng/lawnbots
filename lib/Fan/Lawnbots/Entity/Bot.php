@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Bot extends BaseEntity
 {
-  use Traits\Accessor;
+  use \Fan\Lawnbots\Traits\Accessor;
 
   private $x;
 
@@ -23,7 +23,7 @@ class Bot extends BaseEntity
   public function __construct($position) {
     $params = explode(' ', $position);
     if (count($params) !== 3) {
-     throw new \InvalidArgumentException('Wrong position string!');
+     throw new \InvalidArgumentException('Invalid position string!');
     }
 
     $this->initialize($params);
@@ -44,7 +44,7 @@ class Bot extends BaseEntity
 
   public function setX($x) {
     if (!is_numeric($x)) {
-      throw new \InvalidArgumentException('Wrong x position!');
+      throw new \InvalidArgumentException('Invalid x position!');
     }
 
     $this->x = (int) $x;
@@ -54,7 +54,7 @@ class Bot extends BaseEntity
 
   public function setY($y) {
     if (!is_numeric($y)) {
-      throw new \InvalidArgumentException('Wrong y position!');
+      throw new \InvalidArgumentException('Invalid y position!');
     }
 
     $this->y = (int) $y;
@@ -64,7 +64,7 @@ class Bot extends BaseEntity
 
   public function setHeading($heading) {
     if (!in_array($heading, array('N', 'S', 'E', 'W'))) {
-      throw new \InvalidArgumentException('Wrong heading!');
+      throw new \InvalidArgumentException('Invalid heading!');
     }
 
     $this->heading = $heading;
@@ -74,7 +74,7 @@ class Bot extends BaseEntity
 
   public function setCommand($command) {
     if (!preg_match('/^[LRM]+$/', $command)) {
-      throw new \InvalidArgumentException('Wrong command string!');
+      throw new \InvalidArgumentException('Invalid command string!');
     }
 
     $this->command = $command;

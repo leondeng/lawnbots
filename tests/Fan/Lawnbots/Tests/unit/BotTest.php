@@ -15,30 +15,30 @@ class BotTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('LMLMLMLMM', $bot->getCommand());
   }
 
-  public function testCreateWrongPosition() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong position string!');
+  public function testCreateInvalidPosition() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid position string!');
     $bot = Bot::create('11N', 'S62d8');
   }
 
-  public function testCreateWrongCommand() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong command string!');
+  public function testCreateInvalidCommand() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid command string!');
     $bot = Bot::create('2 3 S', 'sjfewpnfe21');
   }
 
-  public function testCreateWrongXPostion() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong x position!');
+  public function testCreateInvalidXPostion() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid x position!');
     $bot = $this->getBot();
     $bot->setX('x');
   }
 
-  public function testCreateWrongPostion() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong y position!');
+  public function testCreateInvalidPostion() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid y position!');
     $bot = $this->getBot();
     $bot->setY('y');
   }
 
-  public function testCreateWrongHeading() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong heading!');
+  public function testCreateInvalidHeading() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid heading!');
     $bot = $this->getBot();
     $bot->setHeading('999');
   }

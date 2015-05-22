@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Lawn extends BaseEntity
 {
-  use Traits\Accessor;
+  use \Fan\Lawnbots\Traits\Accessor;
 
   private $width;
 
@@ -19,7 +19,7 @@ class Lawn extends BaseEntity
   public function __construct($size) {
     $params = explode(' ', $size);
     if (count($params) !== 2) {
-     throw new \InvalidArgumentException('Wrong size string!');
+     throw new \InvalidArgumentException('Invalid size string!');
     }
 
     $this->initialize($params);
@@ -38,7 +38,7 @@ class Lawn extends BaseEntity
 
   public function setWidth($width) {
     if (!is_numeric($width)) {
-      throw new \InvalidArgumentException('Wrong width!');
+      throw new \InvalidArgumentException('Invalid width!');
     }
 
     $this->width = (int) $width;
@@ -48,7 +48,7 @@ class Lawn extends BaseEntity
 
   public function setHeight($height) {
     if (!is_numeric($height)) {
-      throw new \InvalidArgumentException('Wrong height!');
+      throw new \InvalidArgumentException('Invalid height!');
     }
 
     $this->height = (int) $height;

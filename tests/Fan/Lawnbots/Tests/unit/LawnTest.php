@@ -14,19 +14,19 @@ class LawnTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals(5, $lawn->getHeight());
   }
 
-  public function testCreateWrongSize() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong size string!');
+  public function testCreateInvalidSize() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid size string!');
     $lawn = Lawn::create('xxx');
   }
 
-  public function testCreateWrongWidth() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong width!');
+  public function testCreateInvalidWidth() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid width!');
     $lawn = $this->getLawn();
     $lawn->setWidth('width');
   }
 
-  public function testCreateWrongPostion() {
-    $this->setExpectedException('InvalidArgumentException', 'Wrong height!');
+  public function testCreateInvalidPostion() {
+    $this->setExpectedException('InvalidArgumentException', 'Invalid height!');
     $lawn = $this->getLawn();
     $lawn->setHeight('height');
   }
