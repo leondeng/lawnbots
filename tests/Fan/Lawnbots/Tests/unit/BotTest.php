@@ -25,6 +25,12 @@ class BotTest extends \PHPUnit_Framework_TestCase
     $bot = Bot::create('2 3 S', 'sjfewpnfe21');
   }
 
+  public function testUnknowProperty() {
+    $this->setExpectedException('Exception', 'Unknown property Fan\Lawnbots\Entity\Bot::$unknownProperty!');
+    $bot = $this->getBot();
+    $bot->setUnknownProperty('invalid');
+  }
+
   public function testCreateInvalidXPostion() {
     $this->setExpectedException('InvalidArgumentException', 'Invalid x position!');
     $bot = $this->getBot();

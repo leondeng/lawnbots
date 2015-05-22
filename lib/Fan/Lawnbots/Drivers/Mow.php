@@ -51,20 +51,6 @@ class Mow
     return $this;
   }
 
-  /* public function getBotsNum() {
-    return $this->botsNum;
-  }
-
-  public function setLawn(Lawn $lawn) {
-    $this->lawn = $lawn;
-
-    return $this;
-  }
-
-  public function getLawn() {
-    return $this->lawn;
-  } */
-
   public function generateInstructions() {
     throw new \Exception('!Needs implementation!');
   }

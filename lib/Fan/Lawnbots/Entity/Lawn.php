@@ -135,26 +135,6 @@ class Lawn extends BaseEntity
     return false;
   }
 
-  public function mowMe() {
-    if (!count($this->bots)) {
-      throw new \Exception('Sorry, can not mow without any bot!');
-    }
-
-    $activeBots = count($this->bots);
-
-    do {
-      foreach ($this->bots as $bot) {
-        if ($bot->getNextStep()) {
-          $bot->step();
-        } else {
-          $activeBots--;
-        }
-      }
-
-    } while ($activeBots > 0); // all bots stop
-
-  }
-
   public function __toString() {
     return sprintf('%d %d', $this->width, $this->height);
   }

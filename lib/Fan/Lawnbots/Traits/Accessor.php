@@ -24,10 +24,9 @@ trait Accessor
 
         $refl = new \ReflectionObject($this);
         if ($refl->hasProperty($prop)) {
-          array_unshift($arguments, $prop);
-          return call_user_func_array(array($this, $verb), $arguments);
+          return call_user_func_array(array($this, $verb), array_merge(array($prop), $arguments));
         } else {
-          throw new \Exception(sprintf('Unknow propert %s::$%s', get_class($this), $prop));
+          throw new \Exception(sprintf('Unknown property %s::$%s!', get_class($this), $prop));
         }
       }
     } catch(\Exception $e) {
