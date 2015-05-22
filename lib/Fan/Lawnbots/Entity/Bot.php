@@ -12,13 +12,30 @@ class Bot extends BaseEntity
 {
   use \Fan\Lawnbots\Traits\Accessor;
 
+  /*
+   * @var int
+   */
   private $x;
 
+  /*
+   * @var int
+   */
   private $y;
 
+  /*
+   * @var char
+   */
   private $heading;
 
+  /*
+   * @var string
+   */
   private $command;
+
+  /*
+   * @var Lawn
+   */
+  private $lawn;
 
   public function __construct($position) {
     $params = explode(' ', $position);

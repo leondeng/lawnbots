@@ -3,6 +3,7 @@
 namespace Fan\Lawnbots\Tests\unit;
 
 use Fan\Lawnbots\Entity\Lawn;
+use Fan\Lawnbots\Entity\Bot;
 
 class LawnTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,6 +13,7 @@ class LawnTest extends \PHPUnit_Framework_TestCase
     $this->assertInstanceOf('Fan\Lawnbots\Entity\Lawn', $lawn);
     $this->assertEquals(5, $lawn->getWidth());
     $this->assertEquals(5, $lawn->getHeight());
+    $this->assertInstanceOf('Doctrine\Common\Collections\ArrayCollection', $lawn->getBots());
   }
 
   public function testCreateInvalidSize() {
@@ -40,10 +42,56 @@ class LawnTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('7 14', (string) $lawn);
   }
 
-  public function getLawn() {
-    $lawn = Lawn::create('5 5');
+  public function testAddBot() {
+    $lawn = $this->getLawn();
+    $lawn->addBot($this->getBotA());
+    $lawn->addBot($this->getBotB());
 
-    return $lawn;
+    $this->assertEquals(2, count($lawn->getBots()));
   }
 
+  public function testRemovebot() {
+    $lawn = $this->getLawn();
+    $botA = $this->getBotA();
+    $lawn->addBot($botA);
+    $botB = $this->getBotB();
+    $lawn->addBot($botB);
+    $lawn->removeBot($botA);
+
+    $bots = $lawn->getBots();
+    $this->assertEquals(1, count($bots));
+    $botOnLawn = $bots->first();
+    $this->assertInstanceOf('Fan\Lawnbots\Entity\Bot', $botOnLawn);
+    $this->assertEquals(3,$botOnLawn->getX());
+    $this->assertEquals(3, $botOnLawn->getY());
+    $this->assertEquals('MMRMMRMRRM', $botOnLawn->getCommand());
+  }
+
+  public function testOutWidthBot() {
+    $this->setExpectedException('Exception', 'Invalid x postion of bot, out of width of lawn!');
+    $lawn = $this->getLawn();
+    $bot = $this->getBotA();
+    $bot->setX(5);
+    $lawn->addBot($bot);
+  }
+
+  public function testOutHeightBot() {
+    $this->setExpectedException('Exception', 'Invalid y postion of bot, out of height of lawn!');
+    $lawn = $this->getLawn();
+    $bot = $this->getBotA();
+    $bot->setY(7);
+    $lawn->addBot($bot);
+  }
+
+  public function getLawn() {
+    return Lawn::create('5 5');
+  }
+
+  public function getBotA() {
+    return Bot::create('1 2 N', 'LMLMLMLMM');
+  }
+
+  public function getBotB() {
+    return Bot::create('3 3 E', 'MMRMMRMRRM');
+  }
 }

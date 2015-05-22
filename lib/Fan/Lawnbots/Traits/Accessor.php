@@ -7,15 +7,11 @@ use Doctrine\Common\Inflector\Inflector;
 trait Accessor
 {
   public function get($property){
-    if (property_exists($this, $property)) {
-      return $this->$property;
-    }
+    return $this->$property;
   }
 
   public function set($property, $value) {
-    if (property_exists($this, $property)) {
-      $this->$property = $value;
-    }
+    $this->$property = $value;
 
     return $this;
   }
@@ -30,6 +26,8 @@ trait Accessor
         if ($refl->hasProperty($prop)) {
           array_unshift($arguments, $prop);
           return call_user_func_array(array($this, $verb), $arguments);
+        } else {
+          throw new \Exception(sprintf('Unknow propert %s::$%s', get_class($this), $prop));
         }
       }
     } catch(\Exception $e) {
