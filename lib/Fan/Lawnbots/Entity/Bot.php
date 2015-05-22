@@ -44,6 +44,11 @@ class Bot extends BaseEntity
    */
   private $lawn;
 
+  /*
+   * @var array
+   */
+  private $sequence = null;
+
   public function __construct($position) {
     $params = explode(' ', $position);
     if (count($params) !== 3) {
@@ -107,6 +112,8 @@ class Bot extends BaseEntity
   }
 
   public function getSequence() {
+    if ($this->sequence) return $this->sequence;
+
     $sequence = array();
     $sequence[] = array(
       'x' => $this->x,
@@ -118,7 +125,7 @@ class Bot extends BaseEntity
       $sequence[] = $this->getNextPosition(end($sequence), $action);
     }
 
-    return $sequence;
+    return $this->sequence = $sequence;
   }
 
   private function getNextPosition($position, $action) {
@@ -159,6 +166,23 @@ class Bot extends BaseEntity
     }
 
     return $position;
+  }
+
+  public function getFinalPosition() {
+    $seq = $this->getSequence();
+
+    $position = end($seq);
+
+    return sprintf('%d %d %s', $position['x'], $position['y'], $position['heading']);
+  }
+
+  public function reset() {
+    $this->x = null;
+    $this->y = null;
+    $this->heading = null;
+    $this->command = null;
+    $this->sequence = null;
+    $this->lawn = null;
   }
 
   public function __toString() {

@@ -53,6 +53,18 @@ class BotTest extends \PHPUnit_Framework_TestCase
     $this->assertEquals('3 5 W', (string) $bot);
   }
 
+  public function testFinalPosition() {
+    $bot = $this->getBot();
+    $this->assertEquals('1 3 N', $bot->getFinalPosition());
+
+    $bot->reset();
+    $bot->setX(3);
+    $bot->setY(3);
+    $bot->setHeading('E');
+    $bot->setCommand('MMRMMRMRRM');
+    $this->assertEquals('5 1 E', $bot->getFinalPosition());
+  }
+
   public function getBot() {
     $bot = Bot::create('1 2 N', 'LMLMLMLMM');
 
