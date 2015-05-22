@@ -71,7 +71,7 @@ class LawnTest extends \PHPUnit_Framework_TestCase
     $this->setExpectedException('Exception', 'Invalid x postion of bot, out of width of lawn!');
     $lawn = $this->getLawn();
     $bot = $this->getBotA();
-    $bot->setX(5);
+    $bot->setX(6);
     $lawn->addBot($bot);
   }
 
@@ -79,8 +79,26 @@ class LawnTest extends \PHPUnit_Framework_TestCase
     $this->setExpectedException('Exception', 'Invalid y postion of bot, out of height of lawn!');
     $lawn = $this->getLawn();
     $bot = $this->getBotA();
-    $bot->setY(7);
+    $bot->setY(9);
     $lawn->addBot($bot);
+  }
+
+  public function testOverStepBot() {
+    $this->setExpectedException('Exception', 'Bad command of bot, overstep of boundary detected!');
+    $lawn = $this->getLawn();
+    $bot = $this->getBotA();
+    $bot->setCommand('LMMLMMLM'); //print_r($bot->getSequence()); die();
+    $lawn->addBot($bot);
+  }
+
+  public function testCollisionBot() {
+    $this->setExpectedException('Exception', 'Bad command of bot, bots collision detected!');
+    $lawn = $this->getLawn();
+    $botA = $this->getBotA();
+    $lawn->addBot($botA);
+
+    $botC = $this->getBotC();
+    $lawn->addBot($botC);
   }
 
   public function getLawn() {
@@ -93,5 +111,9 @@ class LawnTest extends \PHPUnit_Framework_TestCase
 
   public function getBotB() {
     return Bot::create('3 3 E', 'MMRMMRMRRM');
+  }
+
+  public function getBotC() {
+    return Bot::create('0 3 W', 'LMMMLMMLM');
   }
 }

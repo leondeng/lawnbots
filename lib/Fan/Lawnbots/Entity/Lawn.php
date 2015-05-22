@@ -84,13 +84,75 @@ class Lawn extends BaseEntity
   }
 
   private function validateBot(Bot $bot) {
-    if ($bot->getX() >= $this->width) {
+    if ($bot->getX() > $this->width) {
       throw new \Exception('Invalid x postion of bot, out of width of lawn!');
-    } elseif ($bot->getY() >= $this->height) {
-      throw new \Exception('Invalid y postion of bot, out of height of lawn!');
-    } else {
-      return true;
     }
+
+    if ($bot->getY() > $this->height) {
+      throw new \Exception('Invalid y postion of bot, out of height of lawn!');
+    }
+
+    if ($this->detectOverStep($bot)) {
+      throw new \Exception('Bad command of bot, overstep of boundary detected!');
+    }
+
+    if ($this->detectCollision($bot)) { // this bot route bump into any other existing bot, or run over any other existing bot
+      throw new \Exception('Bad command of bot, bots collision detected!');
+    }
+
+    return true;
+  }
+
+  private function detectOverStep(Bot $bot) {
+    $sequence = $bot->getSequence();
+
+    foreach ($sequence as $position) {
+      if ($position['x'] < 0 ||
+          $position['y'] < 0 ||
+          $position['x'] > $this->width ||
+          $position['y'] > $this->height) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  private function detectCollision(Bot $newBot) {
+    if (!count($this->bots)) return false;
+
+    $newSeq = $newBot->getSequence();
+    foreach ($this->bots as $bot) {
+      $seq = $bot->getSequence();
+      foreach ($seq as $time => $position) {
+        if ($newSeq[$time]['x'] === $position['x'] &&
+             $newSeq[$time]['y'] === $position['y']) {
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  public function mowMe() {
+    if (!count($this->bots)) {
+      throw new \Exception('Sorry, can not mow without any bot!');
+    }
+
+    $activeBots = count($this->bots);
+
+    do {
+      foreach ($this->bots as $bot) {
+        if ($bot->getNextStep()) {
+          $bot->step();
+        } else {
+          $activeBots--;
+        }
+      }
+
+    } while ($activeBots > 0); // all bots stop
+
   }
 
   public function __toString() {
